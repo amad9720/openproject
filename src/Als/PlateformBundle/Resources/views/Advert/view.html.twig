@@ -1,23 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends '@AlsPlateform/baseBundle.html.twig' %}
 
 {% block title %}Page Annonce{% endblock %}
 
-{% block body %}
-    <h1>This is the add number {{ id }} with the tag ({{ tag }})</h1>
-    <a href="{{ url }}">Click to this link</a>
+{% block alsplateform_body %}
+    <h2>{{ advert.title }}</h2>
 
-    <h1>Affichage d'une annonce</h1>
+    <i>Par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}</i>
 
-
-    {# On affiche tous les messages flash dont le nom est « info » #}
-    {% for message in app.session.flashbag.get('info') %}
-        <p>Message flash : {{ message }}</p>
-    {% endfor %}
-
+    <div class="well">
+        {{ advert.content }}
+    </div>
 
     <p>
-        Ici nous pourrons lire l'annonce ayant comme id : {{ id }}<br />
-        Mais pour l'instant, nous ne savons pas encore le faire, cela viendra !
+        <a href="{{ path('als_plateform_home') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la liste
+        </a>
+        <a href="{{ path('als_plateform_edit', {'id': advert.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+            Modifier l'annonce
+        </a>
+        <a href="{{ path('als_plateform_delete', {'id': advert.id}) }}" class="btn btn-danger">
+            <i class="glyphicon glyphicon-trash"></i>
+            Supprimer l'annonce
+        </a>
     </p>
-
 {% endblock %}
+

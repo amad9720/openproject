@@ -1,5 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <div id="menu">
+        {{ render(controller("AlsPlateformBundle:Advert:menu")) }}
+    </div>
+
     <h1>This year {{ year }} peoples like {{ slug }} {{ format }}</h1>
+
+    <h1>film de venture</h1>
+    {% if year > 2010 %}
+        <p>film nouveau</p>
+    {% elseif year > 2025 %}
+        <p>Film du future</p>
+    {% endif %}
 {% endblock %}

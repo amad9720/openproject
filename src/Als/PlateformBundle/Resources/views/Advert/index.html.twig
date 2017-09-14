@@ -1,6 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends '@AlsPlateform/baseBundle.html.twig' %}
 
-{% block body %}
-    <h1>This is the Advert Page and it's link is {{ url }}</h1>
-    <a href="{{ path('als_plateform_home') }}">Lien vers la page AD </a>
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block alsplateform_body %}
+
+    <h2>Liste des annonces</h2>
+
+    <ul>
+        {% for advert in listAdverts %}
+            <li>
+                <a href="{{ path('als_plateform_view', {'id': advert.id}) }}">
+                    {{ advert.title }}
+                </a>
+                par {{ advert.author }},
+                le {{ advert.date|date('d/m/Y') }}
+            </li>
+        {% else %}
+            <li>Pas (encore !) d'annonces</li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
