@@ -1,0 +1,8 @@
+sup_test:
+    resource: "@SupTestBundle/Resources/config/routing.yml"
+    prefix:   /test
+
+#import des routes du Bundle AlsPlateformBundle
+als_plateform:
+    resource: "@AlsPlateformBundle/Resources/config/routing.yml"
+    prefix:   /plateform

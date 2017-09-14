@@ -1,0 +1,29 @@
+sup_test_homepage:
+    path:     /{pageName_1}/{id_1}/{pageName_2}/{id_2}
+    defaults:
+        _controller:   SupTestBundle:Test:index
+    requirements:
+        pageName_1:    \[A-z]
+        pageName_2:    \[A-z]
+        id_1:    \d+
+        id_2:    \d+
+
+sup_test_restaurant:
+    path:     /restaurant/{pageName_1}/{id_1}/{pageName_2}/{id_2}
+    defaults:
+        _controller:   SupTestBundle:Test:restaurant
+    requirements:
+        pageName_1:    \[A-z]
+        pageName_2:    \[A-z]
+        id_1:    \d+
+        id_2:    \d+
+
+sup_test_fournisseur:
+    path:     /fournisseur/{pageName_1}/{id_1}/{pageName_2}/{id_2}
+    defaults:
+        _controller:   SupTestBundle:Test:fournisseur
+    requirements:
+        pageName_1:    \[A-z]
+        pageName_2:    \[A-z]
+        id_1:    \d+
+        id_2:    \d+

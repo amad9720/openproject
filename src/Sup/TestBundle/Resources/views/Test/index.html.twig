@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ Current }}{% endblock %}
+
+{% block body %}
+    <h1> {{ Current }} </h1>
+    <nav>
+        <ul>
+            <li><a href="{{ path('sup_test_fournisseur', {'id_1': Current_id, 'pageName_1': Current, 'id_2': id_2, 'pageName_2': pageName_2}) }}">{{ pageName_1 }} - {{ id_1 }}</a></li>
+            <li><a href="{{ path('sup_test_restaurant', {'id_1': id_1, 'pageName_1': pageName_1, 'id_2': Current_id, 'pageName_2': Current}) }}">{{ pageName_2 }} - {{ id_2 }}</a></li>
+        </ul>
+    </nav>
+{% endblock %}

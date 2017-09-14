@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Annonce{% endblock %}
+
+{% block body %}
+    <h1>This is the add number {{ id }} with the tag ({{ tag }})</h1>
+    <a href="{{ url }}">Click to this link</a>
+
+    <h1>Affichage d'une annonce</h1>
+
+
+    {# On affiche tous les messages flash dont le nom est « info » #}
+    {% for message in app.session.flashbag.get('info') %}
+        <p>Message flash : {{ message }}</p>
+    {% endfor %}
+
+
+    <p>
+        Ici nous pourrons lire l'annonce ayant comme id : {{ id }}<br />
+        Mais pour l'instant, nous ne savons pas encore le faire, cela viendra !
+    </p>
+
+{% endblock %}
