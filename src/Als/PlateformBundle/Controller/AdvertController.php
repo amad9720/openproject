@@ -200,15 +200,27 @@ class AdvertController extends Controller
     public function editAction($id, Request $request)
     {
         // Ici, on récupérera l'annonce correspondante à $id
-
         // Même mécanisme que pour l'ajout
-        if ($request->isMethod('POST')) {
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
+//        if ($request->isMethod('POST')) {
+//            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
+//
+//            return $this->redirectToRoute('als_plateform_view', array('id' => 5));
+//        }
+//
+//        return $this->render('AlsPlateformBundle:Advert:edit.html.twig');
 
-            return $this->redirectToRoute('als_plateform_view', array('id' => 5));
-        }
+        // Ici, on récupérera l'annonce correspondant à $id
+        $advert = array(
+            'title'   => 'Recherche développpeur Symfony2',
+            'id'      => $id,
+            'author'  => 'Alexandre',
+            'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
+            'date'    => new \Datetime()
+        );
 
-        return $this->render('AlsPlateformBundle:Advert:edit.html.twig');
+        return $this->render('AlsPlateformBundle:Advert:edit.html.twig', array(
+            'advert' => $advert
+        ));
     }
 
     public function deleteAction($id)
