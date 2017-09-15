@@ -181,20 +181,27 @@ class AdvertController extends Controller
 
     public function addAction(Request $request)
     {
-        // La gestion d'un formulaire est particulière, mais l'idée est la suivante :
+//        // La gestion d'un formulaire est particulière, mais l'idée est la suivante :
+//
+//        // Si la requête est en POST, c'est que le visiteur a soumis le formulaire
+//        if ($request->isMethod('POST')) {
+//            // Ici, on s'occupera de la création et de la gestion du formulaire
+//
+//            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+//
+//            // Puis on redirige vers la page de visualisation de cettte annonce
+//            return $this->redirectToRoute('als_plateform_view', array('id' => 5));
+//        }
+//
+//        // Si on n'est pas en POST, alors on affiche le formulaire
+//        return $this->render('AlsPlateformBundle:Advert:add.html.twig');
+        $antispam = $this->get('als_plateform.antispam');
 
-        // Si la requête est en POST, c'est que le visiteur a soumis le formulaire
-        if ($request->isMethod('POST')) {
-            // Ici, on s'occupera de la création et de la gestion du formulaire
+        $text = '....';
 
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-
-            // Puis on redirige vers la page de visualisation de cettte annonce
-            return $this->redirectToRoute('als_plateform_view', array('id' => 5));
+        if ($antispam->isSpam($text)) {
+            throw new \Exception('Votre message a été détecté comme spam !');
         }
-
-        // Si on n'est pas en POST, alors on affiche le formulaire
-        return $this->render('AlsPlateformBundle:Advert:add.html.twig');
     }
 
     public function editAction($id, Request $request)

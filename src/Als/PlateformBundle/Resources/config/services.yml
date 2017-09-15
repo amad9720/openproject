@@ -1,4 +1,7 @@
+parameters:
+    #parameter_name: value
+
 services:
-#    als_plateform.example:
-#        class: Als\PlateformBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    als_plateform.antispam:
+        class: Als\PlateformBundle\Antispam\AlsAntispam
+        arguments: [@mailer,%local%,50]

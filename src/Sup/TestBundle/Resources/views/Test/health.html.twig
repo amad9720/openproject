@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Health Checker{% endblock %}
+
+{% block body %}
+
+    <table class="table table-striped">
+        <theader>
+            <tr>
+                <th>Product</th>
+                <th>Weight</th>
+                <th>Quantity</th>
+            </tr>
+        </theader>
+        <tbody>
+            {% for product in health %}
+                <tr>
+                    <td>{{ product.getName() }}</td>
+                    <td>{{ product.getWeight }}</td>
+                    <td> ? </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="lead">
+        Let's see if you Eath Healthy ....
+    </p>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
