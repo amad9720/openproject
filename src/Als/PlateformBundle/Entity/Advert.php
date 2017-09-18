@@ -49,6 +49,59 @@ class Advert
      */
     private $content;
 
+    /**
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published;
+
+    /**
+     * @ORM\OneToOne(TargetEntity="Als\PlateformBundle\Entity\Image", cascade={"persist"})
+     */
+    private $image;
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * Advert constructor.
+     * @internal param \DateTime $date
+     * @internal param $published
+     */
+    public function __construct()
+    {
+        $this->date = date_create();
+        $this->published = true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param mixed $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+    }
+
 
     /**
      * Get id
@@ -156,4 +209,3 @@ class Advert
         return $this->content;
     }
 }
-
