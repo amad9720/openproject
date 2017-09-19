@@ -4,4 +4,4 @@ parameters:
 services:
     als_plateform.antispam:
         class: Als\PlateformBundle\Antispam\AlsAntispam
-        arguments: [@mailer,%local%,50]
+        arguments: [@mailer,%locale%,50]

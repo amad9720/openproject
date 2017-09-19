@@ -1,3 +1,7 @@
+hlt_manageur:
+    resource: "@HltManageurBundle/Resources/config/routing.yml"
+    prefix:   /manageur
+
 sup_test:
     resource: "@SupTestBundle/Resources/config/routing.yml"
     prefix:   /test
