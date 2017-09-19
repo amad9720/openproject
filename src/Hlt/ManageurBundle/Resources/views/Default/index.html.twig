@@ -1,1 +1,30 @@
-Hello World!
+{% extends '@HltManageur/baseBundle.html.twig' %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block hlsmanageur_body %}
+
+    <h3>Que Voulez vous faire ?</h3>
+    <p>
+        <a href="{{ path('hlt_manageur_add_meal') }}" class="btn btn-bg btn-default btn-block">
+            <i class="glyphicon glyphicon-plus"></i>
+            Ajouter Repas
+        </a>
+        <a href="{{ path('hlt_manageur_add_product') }}" class="btn btn-default btn-block">
+            <i class="glyphicon glyphicon-plus"></i>
+            Ajouter Produit
+        </a>
+        <a href="{{ path('hlt_manageur_list_meal') }}" class="btn btn-default btn-block">
+            <i class="glyphicon glyphicon-list"></i>
+            Lister Repas
+        </a>
+        <a href="{{ path('hlt_manageur_list_product') }}" class="btn btn-default btn-block">
+            <i class="glyphicon glyphicon-list"></i>
+            Lister Produits
+        </a>
+    </p>
+
+
+{% endblock %}

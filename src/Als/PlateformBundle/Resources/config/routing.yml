@@ -10,7 +10,7 @@ als_plateform_view:
     path:    /advert/{id}
     defaults:  { _controller: AlsPlateformBundle:Advert:view }
     requirements:
-        page:  \d+
+        id:  \d+
 
 #als_plateform_view_slug:
 #    path:   /advert/{year}/{slug}.{_format}
@@ -29,13 +29,13 @@ als_plateform_edit:
     path:    /edit/{id}
     defaults:  { _controller: AlsPlateformBundle:Advert:edit }
     requirements:
-            page:  \d+
+            id:  \d+
 
 als_plateform_delete:
     path:    /delete/{id}
     defaults:  { _controller: AlsPlateformBundle:Advert:delete }
     requirements:
-            page:  \d+
+            id:  \d+
 
 #als_plateform_view_error:
 #    path:    /advertError/{id}

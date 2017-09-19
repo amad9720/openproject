@@ -1,18 +1,18 @@
-{% extends 'AlsPlateformBundle::specBundle.html.twig' %}
+{% extends '@HltManageur/specBundle.html.twig' %}
 
 {% block title %}
-    Annonces - {{ parent() }}
+    Manageur - {{ parent() }}
 {% endblock %}
 
 {% block inside_body %}
 
     {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
-    <h1>Annonces</h1>
+    <h1>Votre Board</h1>
 
     <hr>
 
     {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
-    {% block alsplateform_body %}
+    {% block hlsmanageur_body %}
     {% endblock %}
 
 {% endblock %}

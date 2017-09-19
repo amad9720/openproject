@@ -1,3 +1,55 @@
 hlt_manageur_homepage:
     path:     /
-    defaults: { _controller: HltManageurBundle:Default:index }
+    defaults: { _controller: HltManageurBundle:Manageur:index }
+
+hlt_manageur_add_product:
+    path:     /product/add
+    defaults: { _controller: HltManageurBundle:Manageur:addProduct }
+
+hlt_manageur_add_meal:
+    path:     /meal/add
+    defaults: { _controller: HltManageurBundle:Manageur:addMeal }
+
+hlt_manageur_view_product:
+    path:     /product/{id}
+    defaults: { _controller: HltManageurBundle:Manageur:viewProduct }
+    requirements:
+        id: \d+
+
+hlt_manageur_view_meal:
+    path:     /meal/{id}
+    defaults: { _controller: HltManageurBundle:Manageur:viewMeal }
+    requirements:
+        id: \d+
+
+hlt_manageur_list_product:
+    path:     /product/list
+    defaults: { _controller: HltManageurBundle:Manageur:listProduct }
+
+hlt_manageur_list_meal:
+    path:     /meal/list
+    defaults: { _controller: HltManageurBundle:Manageur:listMeal }
+
+hlt_manageur_edit_product:
+    path:     /product/edit/{id}
+    defaults: { _controller: HltManageurBundle:Manageur:editProduct }
+    requirements:
+        id: \d+
+
+hlt_manageur_edit_meal:
+    path:     /meal/edit/{id}
+    defaults: { _controller: HltManageurBundle:Manageur:editMeal }
+    requirements:
+        id: \d+
+
+hlt_manageur_delete_product:
+    path:     /product/delete/{id}
+    defaults: { _controller: HltManageurBundle:Manageur:deleteProduct }
+    requirements:
+        id: \d+
+
+hlt_manageur_delete_meal:
+    path:     /meal/delete/{id}
+    defaults: { _controller: HltManageurBundle:Manageur:deleteMeal }
+    requirements:
+        id: \d+

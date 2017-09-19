@@ -1,0 +1,18 @@
+<ul class="nav nav-pills nav-stacked">
+    {% for meal in listMeal %}
+        <li>
+            <a href="{{ path('hlt_manageur_view_meal', {'id': meal.id}) }}">
+                {{ meal.name }}
+            </a>
+        </li>
+    {% endfor %}
+    <hr>
+    {% for product in listProduct %}
+        <li>
+            <a href="{{ path('hlt_manageur_view_product', {'id': product.id}) }}">
+                {{ product.name }}
+            </a>
+        </li>
+    {% endfor %}
+
+</ul>

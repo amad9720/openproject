@@ -1,0 +1,237 @@
+<?php
+
+namespace Hlt\ManageurBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
+
+/**
+ * Product
+ *
+ * @ORM\Table(name="product")
+ * @ORM\Entity(repositoryClass="Hlt\ManageurBundle\Repository\ProductRepository")
+ */
+class Product
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * @var Meal
+     *
+     * @ORM\ManyToOne(targetEntity="Hlt\ManageurBundle\Entity\Meal")
+     */
+    private $meal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100)
+     */
+    private $name;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creationDate", type="datetime")
+     */
+    private $creationDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="endDate", type="datetime")
+     */
+    private $endDate;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="weight", type="integer")
+     */
+    private $weight;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_used", type="boolean")
+     */
+    private $isUsed;
+
+    /**
+     * Product constructor.
+     * @param string $name
+     * @param \DateTime $endDate
+     * @param int $weight
+     */
+    public function __construct($name, DateTime $endDate, $weight)
+    {
+        $this->name = $name;
+        $this->endDate = $endDate;
+        $this->weight = $weight;
+        $this->creationDate = new DateTime();
+        $this->isUsed = false;
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Product
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Set endDate
+     *
+     * @param \DateTime $endDate
+     *
+     * @return Product
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * Get endDate
+     *
+     * @return \DateTime
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     *
+     * @return Product
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * Set isUsed
+     *
+     * @param boolean $isUsed
+     *
+     * @return Product
+     */
+    public function setIsUsed($isUsed)
+    {
+        $this->isUsed = $isUsed;
+
+        return $this;
+    }
+
+    /**
+     * Get isUsed
+     *
+     * @return boolean
+     */
+    public function getIsUsed()
+    {
+        return $this->isUsed;
+    }
+
+    /**
+     * Set meal
+     *
+     * @param \Hlt\ManageurBundle\Entity\Meal $meal
+     *
+     * @return Product
+     */
+    public function setMeal(\Hlt\ManageurBundle\Entity\Meal $meal = null)
+    {
+        $this->meal = $meal;
+
+        return $this;
+    }
+
+    /**
+     * Get meal
+     *
+     * @return \Hlt\ManageurBundle\Entity\Meal
+     */
+    public function getMeal()
+    {
+        return $this->meal;
+    }
+}
