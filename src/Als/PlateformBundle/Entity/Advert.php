@@ -50,11 +50,15 @@ class Advert
     private $content;
 
     /**
+     * @var boolean
+     *
      * @ORM\Column(name="published", type="boolean")
      */
     private $published;
 
     /**
+     * @var Image
+     *
      * @ORM\OneToOne(targetEntity="Als\PlateformBundle\Entity\Image", cascade={"persist"})
      */
     private $image;
