@@ -65,17 +65,9 @@ class Product
      */
     private $isUsed;
 
-    /**
-     * Product constructor.
-     * @param string $name
-     * @param \DateTime $endDate
-     * @param int $weight
-     */
-    public function __construct($name, DateTime $endDate, $weight)
+    
+    public function __construct()
     {
-        $this->name = $name;
-        $this->endDate = $endDate;
-        $this->weight = $weight;
         $this->creationDate = new DateTime();
         $this->isUsed = false;
     }
@@ -186,5 +178,52 @@ class Product
     {
         return $this->weight;
     }
-}
 
+    /**
+     * Set isUsed
+     *
+     * @param boolean $isUsed
+     *
+     * @return Product
+     */
+    public function setIsUsed($isUsed)
+    {
+        $this->isUsed = $isUsed;
+
+        return $this;
+    }
+
+    /**
+     * Get isUsed
+     *
+     * @return boolean
+     */
+    public function getIsUsed()
+    {
+        return $this->isUsed;
+    }
+
+    /**
+     * Set meal
+     *
+     * @param \Hlt\ManageurBundle\Entity\Meal $meal
+     *
+     * @return Product
+     */
+    public function setMeal(\Hlt\ManageurBundle\Entity\Meal $meal = null)
+    {
+        $this->meal = $meal;
+
+        return $this;
+    }
+
+    /**
+     * Get meal
+     *
+     * @return \Hlt\ManageurBundle\Entity\Meal
+     */
+    public function getMeal()
+    {
+        return $this->meal;
+    }
+}

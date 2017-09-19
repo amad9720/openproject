@@ -65,17 +65,12 @@ class Product
      */
     private $isUsed;
 
+
     /**
      * Product constructor.
-     * @param string $name
-     * @param \DateTime $endDate
-     * @param int $weight
      */
-    public function __construct($name, DateTime $endDate, $weight)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->endDate = $endDate;
-        $this->weight = $weight;
         $this->creationDate = new DateTime();
         $this->isUsed = false;
     }

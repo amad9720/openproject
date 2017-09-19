@@ -2,7 +2,12 @@
 
 namespace Hlt\ManageurBundle\Controller;
 
+use Hlt\ManageurBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ManageurController extends Controller
 {
@@ -11,15 +16,54 @@ class ManageurController extends Controller
         return $this->render('HltManageurBundle:Default:index.html.twig');
     }
 
-    public function addMealAction()
+    public function addMealAction(Request $request)
     {
+        // just setup a fresh $Health object
+        $product = new Product();
+        $form = $this->createFormBuilder($product)
+            ->add('name', NumberType::class)
+            ->add('weight', NumberType::class)
+            ->add('endDate', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
+            ->getForm();
 
-        return $this->render('HltManageurBundle:Meal:add.html.twig');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            return $this->redirectToRoute('hlt_manageur_homepage');
+
+        }
+
+        return $this->render('HltManageurBundle:Meal:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
+
+
     }
 
-    public function addProductAction()
+    public function addProductAction(Request $request)
     {
-        return $this->render('HltManageurBundle:Product:add.html.twig');
+        $product = new Product();
+
+        $form = $this->createFormBuilder($product)
+            ->add('name', NumberType::class)
+            ->add('weight', NumberType::class)
+            ->add('endDate', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            return $this->redirectToRoute('hlt_manageur_homepage');
+
+        }
+
+        return $this->render('HltManageurBundle:Product:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function deleteMealAction()

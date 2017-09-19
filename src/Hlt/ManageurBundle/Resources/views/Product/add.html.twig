@@ -1,0 +1,14 @@
+{% extends '@HltManageur/baseBundle.html.twig' %}
+
+{% block title %}
+    Ajout Produit - {{ parent() }}
+{% endblock %}
+
+{% block hlsmanageur_body %}
+
+    <h3>Ajouter votre produit avec le Form suivant</h3>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

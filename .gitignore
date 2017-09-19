@@ -10,12 +10,3 @@
 /vendor/
 /bin/
 /composer.phar
-
-# files from the .idea/ folder
-/.idea/workspace.xml
-/.idea/jsLibraryMappings.xml
-/.idea/modules.xml
-/.idea/php.xml
-/.idea/symfony2.xml
-/.idea/vcs.xml
-
