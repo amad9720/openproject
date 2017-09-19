@@ -3,7 +3,6 @@
 namespace Hlt\ManageurBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Product
@@ -71,7 +70,7 @@ class Product
      */
     public function __construct()
     {
-        $this->creationDate = new DateTime();
+        $this->creationDate = date_create();
         $this->isUsed = false;
     }
 

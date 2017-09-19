@@ -3,7 +3,6 @@
 namespace Hlt\ManageurBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Meal
@@ -43,14 +42,18 @@ class Meal
      */
     private $creationDate;
 
+    private $product_1;
+
+    private $product_2;
+
+    private $product_3;
+
     /**
      * Meal constructor.
-     * @param string $name
      */
-    public function __construct($name)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->creationDate = new DateTime();
+        $this->creationDate = date_create();
         $this->isHealthy = false;
     }
 
@@ -136,4 +139,54 @@ class Meal
     {
         return $this->creationDate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProduct1()
+    {
+        return $this->product_1;
+    }
+
+    /**
+     * @param mixed $product_1
+     */
+    public function setProduct1($product_1)
+    {
+        $this->product_1 = $product_1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProduct2()
+    {
+        return $this->product_2;
+    }
+
+    /**
+     * @param mixed $product_2
+     */
+    public function setProduct2($product_2)
+    {
+        $this->product_2 = $product_2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProduct3()
+    {
+        return $this->product_3;
+    }
+
+    /**
+     * @param mixed $product_3
+     */
+    public function setProduct3($product_3)
+    {
+        $this->product_3 = $product_3;
+    }
+
+
 }

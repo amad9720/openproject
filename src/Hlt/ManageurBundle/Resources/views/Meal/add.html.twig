@@ -1,0 +1,14 @@
+{% extends '@HltManageur/baseBundle.html.twig' %}
+
+{% block title %}
+    Ajout Repas - {{ parent() }}
+{% endblock %}
+
+{% block hlsmanageur_body %}
+
+    <h3>Creer votre Repas  avec le Form suivant</h3>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

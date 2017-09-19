@@ -2,11 +2,14 @@
 
 namespace Hlt\ManageurBundle\Controller;
 
+use Hlt\ManageurBundle\Entity\Meal;
 use Hlt\ManageurBundle\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class ManageurController extends Controller
@@ -19,11 +22,30 @@ class ManageurController extends Controller
     public function addMealAction(Request $request)
     {
         // just setup a fresh $Health object
-        $product = new Product();
-        $form = $this->createFormBuilder($product)
-            ->add('name', NumberType::class)
-            ->add('weight', NumberType::class)
-            ->add('endDate', DateType::class)
+        $meal = new Meal();
+        $form = $this->createFormBuilder($meal)
+            ->add('name',TextType::class)
+            ->add('product_1', EntityType::class, array(
+                // query choices from this entity
+                'class' => 'Hlt\ManageurBundle\Entity\Product',
+
+                // use the User.username property as the visible option string
+                'choice_label' => 'name',
+            ))
+            ->add('product_2', EntityType::class, array(
+                // query choices from this entity
+                'class' => 'Hlt\ManageurBundle\Entity\Product',
+
+                // use the User.username property as the visible option string
+                'choice_label' => 'name',
+            ))
+            ->add('product_3', EntityType::class, array(
+                // query choices from this entity
+                'class' => 'Hlt\ManageurBundle\Entity\Product',
+
+                // use the User.username property as the visible option string
+                'choice_label' => 'name',
+            ))
             ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
             ->getForm();
 
@@ -31,7 +53,22 @@ class ManageurController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('hlt_manageur_homepage');
+            $meal = $form->getData();
+
+            $product_1 = $meal->getProduct1();
+            $product_2 = $meal->getProduct2();
+            $product_3 = $meal->getProduct3();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $product_1->setMeal($meal);
+            $product_2->setMeal($meal);
+            $product_3->setMeal($meal);
+
+            $em->persist($meal);
+            $em->flush();
+
+//            return $this->redirectToRoute('hlt_manageur_homepage');
 
         }
 
@@ -47,7 +84,7 @@ class ManageurController extends Controller
         $product = new Product();
 
         $form = $this->createFormBuilder($product)
-            ->add('name', NumberType::class)
+            ->add('name', TextType::class)
             ->add('weight', NumberType::class)
             ->add('endDate', DateType::class)
             ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
@@ -56,6 +93,13 @@ class ManageurController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $product = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($product);
+            $em->flush();
 
             return $this->redirectToRoute('hlt_manageur_homepage');
 
