@@ -193,28 +193,4 @@ class Advert
     {
         return $this->content;
     }
-
-    /**
-     * Set image
-     *
-     * @param \Als\PlateformBundle\Entity\Image $image
-     *
-     * @return Advert
-     */
-    public function setImage(Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \Als\PlateformBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 }

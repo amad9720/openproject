@@ -5,6 +5,13 @@
 {% block alsplateform_body %}
     <h2>{{ advert.title }}</h2>
 
+    <div class="row">
+        {# On vérifie qu'une image soit bien associée à l'annonce #}
+        {% if advert.image is not null %}
+            <img src="{{ advert.image.url }}" alt="{{ advert.image.alt }}" height="50px" width="100px">
+        {% endif %}
+    </div>
+
     <i>Par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}</i>
 
     <div class="well">

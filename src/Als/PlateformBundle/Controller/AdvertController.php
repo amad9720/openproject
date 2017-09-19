@@ -106,6 +106,7 @@
 namespace Als\PlateformBundle\Controller;
 
 use Als\PlateformBundle\Entity\Advert;
+use Als\PlateformBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -218,6 +219,12 @@ class AdvertController extends Controller
         $advert->setContent("Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…");
         // On peut ne pas définir ni la date ni la publication,
         // car ces attributs sont définis automatiquement dans le constructeur
+
+        $image = new Image();
+        $image->setUrl('http://bit.ly/2xbaHWB');
+        $image->setAlt('image d\'affiche de l\'annonce, elle represente le logo de Symfony');
+
+        $advert->setImage($image);
 
         // On récupère l'EntityManager
         $em = $this->getDoctrine()->getManager();
