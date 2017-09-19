@@ -1,0 +1,3 @@
+hlt_manageur_homepage:
+    path:     /
+    defaults: { _controller: HltManageurBundle:Default:index }
