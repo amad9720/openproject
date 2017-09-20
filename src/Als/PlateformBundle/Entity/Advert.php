@@ -2,6 +2,7 @@
 
 namespace Als\PlateformBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +64,13 @@ class Advert
      */
     private $image;
 
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToMany(targetEntity="Als\PlateformBundle\Entity\Category", cascade={"persist"})
+     */
+    private $categories;
+
     
     /**
      * Advert constructor.
@@ -73,6 +81,7 @@ class Advert
     {
         $this->date = date_create();
         $this->published = true;
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -220,5 +229,39 @@ class Advert
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \Als\PlateformBundle\Entity\Category $category
+     *
+     * @return Advert
+     */
+    public function addCategory(Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Als\PlateformBundle\Entity\Category $category
+     */
+    public function removeCategory(Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Category
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

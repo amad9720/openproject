@@ -2,6 +2,7 @@
 
 namespace Als\PlateformBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,14 +51,25 @@ class Advert
     private $content;
 
     /**
+     * @var boolean
+     *
      * @ORM\Column(name="published", type="boolean")
      */
     private $published;
 
     /**
+     * @var Image
+     *
      * @ORM\OneToOne(targetEntity="Als\PlateformBundle\Entity\Image", cascade={"persist"})
      */
     private $image;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToMany(targetEntity="Als\PlateformBundle\Entity\Category", cascade={"persist"})
+     */
+    private $categories;
 
     
     /**
@@ -69,6 +81,7 @@ class Advert
     {
         $this->date = date_create();
         $this->published = true;
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -192,5 +205,63 @@ class Advert
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Als\PlateformBundle\Entity\Image $image
+     *
+     * @return Advert
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Als\PlateformBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \Als\PlateformBundle\Entity\Category $category
+     *
+     * @return Advert
+     */
+    public function addCategory(Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Als\PlateformBundle\Entity\Category $category
+     */
+    public function removeCategory(Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Category
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }
