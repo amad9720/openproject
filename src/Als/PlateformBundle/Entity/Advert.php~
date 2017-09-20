@@ -65,13 +65,21 @@ class Advert
     private $image;
 
     /**
-     * @var Category
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Als\PlateformBundle\Entity\Category", cascade={"persist"})
      */
     private $categories;
 
-    
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Als\PlateformBundle\Entity\Application", mappedBy="advert")
+     */
+    private $applications;
+
     /**
      * Advert constructor.
      * @internal param \DateTime $date
@@ -258,7 +266,7 @@ class Advert
     /**
      * Get categories
      *
-     * @return Category
+     * @return ArrayCollection
      */
     public function getCategories()
     {

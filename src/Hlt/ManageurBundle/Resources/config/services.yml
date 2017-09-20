@@ -1,4 +1,4 @@
 services:
-#    hlt_manageur.example:
-#        class: Hlt\ManageurBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    hlt_manageur.healthcheck:
+        class: Hlt\ManageurBundle\HealthCheck\HltHealthCheck
+        arguments: []

@@ -1,0 +1,64 @@
+{% extends '@HltManageur/baseBundle.html.twig' %}
+
+{% block title %}
+    Liste des Produit - {{ parent() }}
+{% endblock %}
+
+{% block hlsmanageur_body %}
+
+    <h3> Vos Produits </h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nom</th>
+                <th>Poid</th>
+                <th>Date de Creation</th>
+                <th>Date de Peremption</th>
+                <th>Disponible</th>
+                <th>Voir</th>
+                <th>Modifier</th>
+                <th>Suprimer</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in productList %}
+            <tr>
+                <td>{{ product.getId() }}</td>
+                <td>{{ product.getName() }}</td>
+                <td>{{ product.getWeight }}</td>
+                <td>{{ product.getCreationDate | date('Y-m-d') }}</td>
+                <td>{{ product.getEndDate | date('Y-m-d') }}</td>
+                <td>
+                    {% if(product.getIsUsed() == 1) %}
+                        OUI
+                    {% else %}
+                        NON
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('hlt_manageur_view_product', {"id": product.getId() }) }}">
+                        <i class="glyphicon glyphicons-edit"></i>
+                        voir
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('hlt_manageur_edit_product', {"id": product.getId() }) }}">
+                        <i class="glyphicon glyphicons-edit"></i>
+                        Modifier
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('hlt_manageur_delete_product', {"id": product.getId() }) }}">
+                        <i class="glyphicon glyphicons-edit"></i>
+                        Suprimer
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

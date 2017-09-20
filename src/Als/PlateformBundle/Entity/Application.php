@@ -27,9 +27,11 @@ class Application
     private $id;
 
     /**
+     * Bidirectional - Many-To-One (OWNER SIDE)
+     *
      * @var Advert
      *
-     * @ORM\ManyToOne(targetEntity="Als\PlateformBundle\Entity\Advert")
+     * @ORM\ManyToOne(targetEntity="Als\PlateformBundle\Entity\Advert", inversedBy="applications")
      * @ORM\JoinColumn(nullable=false)
      */
     private $advert;

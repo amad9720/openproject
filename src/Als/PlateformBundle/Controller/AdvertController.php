@@ -106,6 +106,7 @@
 namespace Als\PlateformBundle\Controller;
 
 use Als\PlateformBundle\Entity\Advert;
+use Als\PlateformBundle\Entity\AdvertSkill;
 use Als\PlateformBundle\Entity\Application;
 use Als\PlateformBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -170,23 +171,34 @@ class AdvertController extends Controller
 //            "tag" => $tag
 //        ));
 
-        // On récupère le repository
-        $repository = $this->getDoctrine()
-            ->getManager()
+        $em = $this->getDoctrine()->getManager();
+
+        // On récupère l'annonce $id
+        $advert = $em
             ->getRepository('AlsPlateformBundle:Advert')
+            ->find($id)
         ;
 
-        // On récupère l'entité correspondante à l'id $id
-        $advert = $repository->find($id);
-
-        // $advert est donc une instance de Als\PlateformBundle\Entity\Advert
-        // ou null si l'id $id  n'existe pas, d'où ce if :
         if (null === $advert) {
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
 
+        // On avait déjà récupéré la liste des candidatures
+        $listApplications = $em
+            ->getRepository('AlsPlateformBundle:Application')
+            ->findBy(array('advert' => $advert))
+        ;
+
+        // On récupère maintenant la liste des AdvertSkill
+        $listAdvertSkills = $em
+            ->getRepository('AlsPlateformBundle:AdvertSkill')
+            ->findBy(array('advert' => $advert))
+        ;
+
         return $this->render('AlsPlateformBundle:Advert:view.html.twig', array(
-            'advert' => $advert
+            'advert'           => $advert,
+            'listApplications' => $listApplications,
+            'listAdvertSkills' => $listAdvertSkills
         ));
     }
 
@@ -227,6 +239,29 @@ class AdvertController extends Controller
 
         $advert->setImage($image);
 
+        // On récupère l'EntityManager
+        $em = $this->getDoctrine()->getManager();
+
+        // On récupère toutes les compétences possibles
+        $listSkills = $em->getRepository('AlsPlateformBundle:Skill')->findAll();
+
+        // Pour chaque compétence
+        foreach ($listSkills as $skill) {
+            // On crée une nouvelle « relation entre 1 annonce et 1 compétence »
+            $advertSkill = new AdvertSkill();
+
+            // On la lie à l'annonce, qui est ici toujours la même
+            $advertSkill->setAdvert($advert);
+            // On la lie à la compétence, qui change ici dans la boucle foreach
+            $advertSkill->setSkill($skill);
+
+            // Arbitrairement, on dit que chaque compétence est requise au niveau 'Expert'
+            $advertSkill->setLevel('Expert');
+
+            // Et bien sûr, on persiste cette entité de relation, propriétaire des deux autres relations
+            $em->persist($advertSkill);
+        }
+
         // Création d'une première candidature
         $application1 = new Application();
         $application1->setAuthor('Marine');
@@ -241,10 +276,8 @@ class AdvertController extends Controller
         $application1->setAdvert($advert);
         $application2->setAdvert($advert);
 
-        // On récupère l'EntityManager
-        $em = $this->getDoctrine()->getManager();
-
-        // Étape 1 : On « persiste » l'entité
+        // Doctrine ne connait pas encore l'entité $advert. Si vous n'avez pas définit la relation AdvertSkill
+        // avec un cascade persist (ce qui est le cas si vous avez utilisé mon code), alors on doit persister $advert
         $em->persist($advert);
 
         // Étape 1 bis : pour cette relation pas de cascade lorsqu'on persiste Advert, car la relation est
@@ -252,7 +285,7 @@ class AdvertController extends Controller
         $em->persist($application1);
         $em->persist($application2);
 
-        // Étape 2 : On « flush » tout ce qui a été persisté avant
+        // On déclenche l'enregistrement
         $em->flush();
 
         // Reste de la méthode qu'on avait déjà écrit

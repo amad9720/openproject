@@ -1,5 +1,5 @@
 <ul class="nav nav-pills nav-stacked">
-    {% for meal in listMeal %}
+    {% for meal in mealList %}
         <li>
             <a href="{{ path('hlt_manageur_view_meal', {'id': meal.id}) }}">
                 {{ meal.name }}
@@ -7,7 +7,7 @@
         </li>
     {% endfor %}
     <hr>
-    {% for product in listProduct %}
+    {% for product in productList %}
         <li>
             <a href="{{ path('hlt_manageur_view_product', {'id': product.id}) }}">
                 {{ product.name }}

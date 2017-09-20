@@ -1,0 +1,59 @@
+{% extends '@HltManageur/baseBundle.html.twig' %}
+
+{% block title %}
+    Liste des Repas - {{ parent() }}
+{% endblock %}
+
+{% block hlsmanageur_body %}
+
+    <h3> Vos Repas </h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Nom</th>
+            <th>Date de Creation</th>
+            <th>Saint</th>
+            <th>Voir</th>
+            <th>Modifier</th>
+            <th>Suprimer</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for meal in mealList %}
+            <tr>
+                <td>{{ meal.getId() }}</td>
+                <td>{{ meal.getName() }}</td>
+                <td>{{ meal.getCreationDate | date('Y-m-d') }}</td>
+                <td>
+                    {% if(meal.getIsHealthy() == 1) %}
+                        OUI
+                    {% else %}
+                        NON
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('hlt_manageur_view_meal', {"id": meal.getId() }) }}">
+                        <i class="glyphicon glyphicons-edit"></i>
+                        voir
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('hlt_manageur_edit_meal', {"id": meal.getId() }) }}">
+                        <i class="glyphicon glyphicons-edit"></i>
+                        Modifier
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('hlt_manageur_delete_meal', {"id": meal.getId() }) }}">
+                        <i class="glyphicon glyphicons-edit"></i>
+                        Suprimer
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

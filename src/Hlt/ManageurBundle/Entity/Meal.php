@@ -116,20 +116,19 @@ class Meal
         return $this->isHealthy;
     }
 
-    /**
-     * Set creationDate
-     *
-     * @param \DateTime $creationDate
-     *
-     * @return Meal
-     */
-    public function setCreationDate($creationDate)
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
+//    /**
+//     * Set creationDate
+//     *
+//     * @param \DateTime $creationDate
+//     *
+//     * @return Meal
+//     */
+//    public function setCreationDate($creationDate)
+//    {
+//        $this->creationDate = $creationDate;
+//
+//        return $this;
+//    }
     /**
      * Get creationDate
      *

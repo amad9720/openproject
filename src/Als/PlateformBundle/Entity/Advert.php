@@ -65,13 +65,21 @@ class Advert
     private $image;
 
     /**
-     * @var Category
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Als\PlateformBundle\Entity\Category", cascade={"persist"})
      */
     private $categories;
 
-    
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Als\PlateformBundle\Entity\Application", mappedBy="advert")
+     */
+    private $applications;
+
     /**
      * Advert constructor.
      * @internal param \DateTime $date
@@ -258,10 +266,48 @@ class Advert
     /**
      * Get categories
      *
-     * @return Category
+     * @return ArrayCollection
      */
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Add application
+     *
+     * @param \Als\PlateformBundle\Entity\Application $application
+     *
+     * @return Advert
+     */
+    public function addApplication(\Als\PlateformBundle\Entity\Application $application)
+    {
+        $this->applications[] = $application;
+        $application->setAdvert($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \Als\PlateformBundle\Entity\Application $application
+     */
+    public function removeApplication(\Als\PlateformBundle\Entity\Application $application)
+    {
+        $this->applications->removeElement($application);
+
+        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas ici attention) :
+        //        $application->setAdvert(null)
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 }

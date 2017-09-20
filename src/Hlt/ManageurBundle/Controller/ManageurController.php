@@ -30,21 +30,30 @@ class ManageurController extends Controller
                 'class' => 'Hlt\ManageurBundle\Entity\Product',
 
                 // use the User.username property as the visible option string
-                'choice_label' => 'name',
+                'choice_label' => function(Product $product){
+                    if (!$product->getIsUsed()) return $product->getName();
+                    return null;
+                },
             ))
             ->add('product_2', EntityType::class, array(
                 // query choices from this entity
                 'class' => 'Hlt\ManageurBundle\Entity\Product',
 
                 // use the User.username property as the visible option string
-                'choice_label' => 'name',
+                'choice_label' => function(Product $product){
+                    if (!$product->getIsUsed()) return $product->getName();
+                    return null;
+                },
             ))
             ->add('product_3', EntityType::class, array(
                 // query choices from this entity
                 'class' => 'Hlt\ManageurBundle\Entity\Product',
 
                 // use the User.username property as the visible option string
-                'choice_label' => 'name',
+                'choice_label' => function(Product $product){
+                    if (!$product->getIsUsed()) return $product->getName();
+                    return null;
+                },
             ))
             ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
             ->getForm();
@@ -61,9 +70,14 @@ class ManageurController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $product_1->setMeal($meal);
-            $product_2->setMeal($meal);
-            $product_3->setMeal($meal);
+            $product_1->setMeal($meal)->setIsUsed(true);
+            $product_2->setMeal($meal)->setIsUsed(true);
+            $product_3->setMeal($meal)->setIsUsed(true);
+
+            //service is used here
+            $health_checker = $this->get('hlt_manageur.healthcheck');
+
+            $meal->setIsHealthy($health_checker->isHealthy($meal));
 
             $em->persist($meal);
             $em->flush();
@@ -142,23 +156,35 @@ class ManageurController extends Controller
 
     public function listMealAction()
     {
-        return $this->render('HltManageurBundle:Meal:list.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $mealList = $em->getRepository('HltManageurBundle:Meal')->findAll();
+
+        return $this->render('HltManageurBundle:Meal:list.html.twig', array(
+            "mealList" => $mealList
+        ));
     }
 
     public function listProductAction()
     {
-        return $this->render('HltManageurBundle:Product:list.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $productList = $em->getRepository('HltManageurBundle:Product')->findAll();
+
+        return $this->render('HltManageurBundle:Product:list.html.twig', array(
+            "productList" => $productList
+        ));
     }
 
     public function menuAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $productList = $em->getRepository('HltManageurBundle:Product')->findAll();
+        $mealList = $em->getRepository('HltManageurBundle:Meal')->findAll();
 
-        $listMeal = '';
-        $listProduct = '';
+
 
         return $this->render('HltManageurBundle:Default:menu.html.twig', array(
-            'listMeal' => $listMeal,
-            'listProduct' => $listProduct
+            'mealList' => $mealList,
+            'productList' => $productList
         ));
     }
 }
