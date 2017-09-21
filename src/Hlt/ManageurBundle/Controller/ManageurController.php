@@ -32,7 +32,7 @@ class ManageurController extends Controller
                 // use the User.username property as the visible option string
                 'choice_label' => function(Product $product){
                     if (!$product->getIsUsed()) return $product->getName();
-                    return null;
+                    return 'En Manque';
                 },
             ))
             ->add('product_2', EntityType::class, array(
@@ -42,7 +42,7 @@ class ManageurController extends Controller
                 // use the User.username property as the visible option string
                 'choice_label' => function(Product $product){
                     if (!$product->getIsUsed()) return $product->getName();
-                    return null;
+                    return 'En Manque';
                 },
             ))
             ->add('product_3', EntityType::class, array(
@@ -52,7 +52,7 @@ class ManageurController extends Controller
                 // use the User.username property as the visible option string
                 'choice_label' => function(Product $product){
                     if (!$product->getIsUsed()) return $product->getName();
-                    return null;
+                    return 'En Manque';
                 },
             ))
             ->add('save', SubmitType::class, array('label' => 'Enregistrer'))

@@ -78,6 +78,15 @@ class AdvertRepository extends EntityRepository
             ->where('a.author = :author')
             ->setParameter('author', $author)
         ;
+
+        $this
+            ->whereCurrentYear($qb)
+            ->orderBy('a.date', 'ASC');
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;        
     }
 
     public function whereCurrentYear(QueryBuilder $qb)
@@ -87,6 +96,5 @@ class AdvertRepository extends EntityRepository
             ->setParameter('start', new \Datetime(date('Y').'-01-01'))
             ->setParameter('start', new \Datetime(date('Y').'-12-31'))
         ;
-
     }
 }
