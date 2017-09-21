@@ -3,6 +3,8 @@
 namespace Als\PlateformBundle\Repository;
 
 use \Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * AdvertRepository
  *
@@ -66,5 +68,25 @@ class AdvertRepository extends EntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function myFindAuthorInCurrentYear($author)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb
+            ->where('a.author = :author')
+            ->setParameter('author', $author)
+        ;
+    }
+
+    public function whereCurrentYear(QueryBuilder $qb)
+    {
+        return $qb
+            ->andWhere('a.date BETWEEN :start AND :end')
+            ->setParameter('start', new \Datetime(date('Y').'-01-01'))
+            ->setParameter('start', new \Datetime(date('Y').'-12-31'))
+        ;
+
     }
 }
