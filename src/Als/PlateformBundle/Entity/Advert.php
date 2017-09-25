@@ -97,6 +97,11 @@ class Advert
     private $updatedAt;
 
     /**
+     * @ORM\Column(name="nb_applications", type="integer")
+     */
+    private $nbApplications = 0;
+
+    /**
      * Advert constructor.
      * @internal param \DateTime $date
      * @internal param $published
@@ -368,15 +373,29 @@ class Advert
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
-    
+
+    /**
+     * @ORM\PreUpdate()
+     */
     public function updateDate()
     {
         $this->setUpdatedAt(new \Datetime());
+    }
+
+    public function increaseApplication()
+    {
+        $this->nbApplications++;
+    }
+
+
+    public function decreaseApplication()
+    {
+        $this->nbApplications--;
     }
 }
