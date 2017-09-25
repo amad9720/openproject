@@ -4,6 +4,7 @@ namespace Als\PlateformBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Advert
@@ -79,6 +80,20 @@ class Advert
      * @ORM\OneToMany(targetEntity="Als\PlateformBundle\Entity\Application", mappedBy="advert")
      */
     private $applications;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isDeleted", type="boolean")
+     */
+    private $isDeleted;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * Advert constructor.
@@ -271,5 +286,67 @@ class Advert
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Add application
+     *
+     * @param \Als\PlateformBundle\Entity\Application $application
+     *
+     * @return Advert
+     */
+    public function addApplication(\Als\PlateformBundle\Entity\Application $application)
+    {
+        $this->applications[] = $application;
+        $application->setAdvert($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \Als\PlateformBundle\Entity\Application $application
+     */
+    public function removeApplication(\Als\PlateformBundle\Entity\Application $application)
+    {
+        $this->applications->removeElement($application);
+
+        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas ici attention) :
+        //        $application->setAdvert(null)
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    /**
+     * Set isDeleted
+     *
+     * @param boolean $isDeleted
+     *
+     * @return Advert
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeleted
+     *
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
     }
 }

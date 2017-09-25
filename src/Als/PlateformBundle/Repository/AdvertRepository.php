@@ -89,6 +89,39 @@ class AdvertRepository extends EntityRepository
         ;        
     }
 
+    public function getAdvertWithApplications()
+    {
+        $qb = $this
+            ->createQueryBuilder('a')
+            ->leftJoin('a.applications', 'app')
+            ->addSelect('app')
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAdvertWithCategories(array $categoryNames)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->join('a.categories', 'a')
+            ->addSelect('c')
+        ;
+
+        // Puis on filtre sur le nom des catégories à l'aide d'un IN
+        $qb->where($qb->expr()->in('c.name', $categoryNames));
+        // La syntaxe du IN et d'autres expressions se trouve dans la documentation Doctrine
+
+        // Enfin, on retourne le résultat
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function whereCurrentYear(QueryBuilder $qb)
     {
         return $qb

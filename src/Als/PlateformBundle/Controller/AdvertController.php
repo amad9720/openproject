@@ -362,6 +362,21 @@ class AdvertController extends Controller
         return $this->render('AlsPlateformBundle:Advert:delete.html.twig');
     }
 
+    public function listAction()
+    {
+        $listAdverts = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AlsPlateformBundle:Advert')
+            ->getAdvertWithApplications()
+        ;
+
+        foreach ($listAdverts as $advert) {
+
+            $advert->getApplications();
+        }
+    }
+
     public function menuAction()
     {
         // On fixe en dur une liste ici, bien entendu par la suite
