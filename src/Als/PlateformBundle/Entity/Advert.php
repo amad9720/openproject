@@ -120,6 +120,7 @@ class Advert
         $this->date = date_create();
         $this->published = true;
         $this->categories = new ArrayCollection();
+        $this->isDeleted = false;
     }
 
     /**
