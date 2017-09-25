@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Als\PlateformBundle\AlsPlateformBundle(),
             new Sup\TestBundle\SupTestBundle(),
             new Hlt\ManageurBundle\HltManageurBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

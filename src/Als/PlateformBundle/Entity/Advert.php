@@ -5,6 +5,7 @@ namespace Als\PlateformBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Advert
@@ -100,6 +101,14 @@ class Advert
      * @ORM\Column(name="nb_applications", type="integer")
      */
     private $nbApplications = 0;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * Advert constructor.
