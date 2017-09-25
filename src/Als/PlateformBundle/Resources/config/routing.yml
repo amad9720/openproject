@@ -11,15 +11,6 @@ als_plateform_view:
     defaults:  { _controller: AlsPlateformBundle:Advert:view }
     requirements:
         id:  \d+
-
-#als_plateform_view_slug:
-#    path:   /advert/{year}/{slug}.{_format}
-#    defaults:
-#        _controller: AlsPlateformBundle:Advert:viewSlug
-#        _format:      html
-#    requirements:
-#        year:   \d{4}
-#        format:   html|xml
     
 als_plateform_add:
     path:    /add
@@ -37,13 +28,17 @@ als_plateform_delete:
     requirements:
             id:  \d+
 
-#als_plateform_view_error:
-#    path:    /advertError/{id}
-#    defaults:  { _controller: AlsPlateformBundle:Advert:viewError }
-
 als_plateform_redirect:
     path:   /redirect
     defaults: { _controller: AlsPlateformBundle:Advert:redirect }
+
+als_plateform_test:
+    path:   /test
+    defaults: { _controller: AlsPlateformBundle:Advert:test }
+
+als_plateform_list:
+    path:   /list
+    defaults: { _controller: AlsPlateformBundle:Advert:list }
 
 #als_plateform_view_json:
 #    path:   /json-view
@@ -52,3 +47,14 @@ als_plateform_redirect:
 #als_plateform_view_session:
 #    path:   /session
 #    defaults: { _controller: AlsPlateformBundle:Advert:manSession }
+#als_plateform_view_error:
+#    path:    /advertError/{id}
+#    defaults:  { _controller: AlsPlateformBundle:Advert:viewError }
+#als_plateform_view_slug:
+#    path:   /advert/{year}/{slug}.{_format}
+#    defaults:
+#        _controller: AlsPlateformBundle:Advert:viewSlug
+#        _format:      html
+#    requirements:
+#        year:   \d{4}
+#        format:   html|xml

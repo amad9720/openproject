@@ -377,6 +377,21 @@ class AdvertController extends Controller
         }
     }
 
+    public function testAction()
+    {
+        $advert = new Advert();
+        $advert->setTitle("Recherche développeur !");
+        $advert->setAuthor('Marine');
+        $advert->setContent("Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…");
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($advert);
+        $em->flush(); // C'est à ce moment qu'est généré le slug
+
+        return new Response('Slug généré : '.$advert->getSlug());
+        // Affiche « Slug généré : recherche-developpeur »
+    }
+
     public function menuAction()
     {
         // On fixe en dur une liste ici, bien entendu par la suite
