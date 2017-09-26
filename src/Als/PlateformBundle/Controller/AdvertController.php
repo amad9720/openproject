@@ -228,11 +228,22 @@ class AdvertController extends Controller
 //        }
         // Création de l'entité
         $advert = new Advert();
-        $advert->setTitle('Recherche développeur Symfony2.');
-        $advert->setAuthor('Alexandre');
-        $advert->setContent("Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…");
-        // On peut ne pas définir ni la date ni la publication,
-        // car ces attributs sont définis automatiquement dans le constructeur
+
+        $formBuilder = $this
+            ->get('form.factory')
+            ->createBuilder('form', $advert)
+        ;
+
+        $formBuilder
+            ->add('date',      'date')
+            ->add('title',     'text')
+            ->add('content',   'textarea')
+            ->add('author',    'text')
+            ->add('published', 'checkbox')
+            ->add('save',      'submit')
+        ;
+
+        $form = $formBuilder->getForm();
 
         $image = new Image();
         $image->setUrl('http://bit.ly/2xbaHWB');
@@ -295,7 +306,9 @@ class AdvertController extends Controller
 //            return $this->redirect($this->generateUrl('als_plateform_view', array('id' => $advert->getId())));
 //        }
 
-        return $this->render('AlsPlateformBundle:Advert:add.html.twig');
+        return $this->render('AlsPlateformBundle:Advert:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function editAction($id, Request $request)
