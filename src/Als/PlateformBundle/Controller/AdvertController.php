@@ -109,6 +109,7 @@ use Als\PlateformBundle\Entity\Advert;
 use Als\PlateformBundle\Entity\AdvertSkill;
 use Als\PlateformBundle\Entity\Application;
 use Als\PlateformBundle\Entity\Image;
+use Als\PlateformBundle\Form\AdvertType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -228,31 +229,14 @@ class AdvertController extends Controller
 //        }
         // Création de l'entité
         $advert = new Advert();
-        $advert->setTitle('Recherche développeur Symfony2.');
-        $advert->setAuthor('Alexandre');
-        $advert->setContent("Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…");
 
-        $formBuilder = $this
-            ->createFormBuilder($advert)
+        $form = $this
+            ->get('form.factory')
+            ->create(new AdvertType(), $advert)
         ;
 
-        $formBuilder
-            ->add('date',      'date')
-            ->add('title',     'text')
-            ->add('content',   'textarea')
-            ->add('author',    'text')
-            ->add('published', 'checkbox', array('required' => false))
-            ->add('save',      'submit')
-        ;
-
-        $form = $formBuilder->getForm();
-
-        // On fait le lien Requête <-> Formulaire
-        // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
         $form->handleRequest($request);
 
-        // On vérifie que les valeurs entrées sont correctes
-        // (Nous verrons la validation des objets en détail dans le prochain chapitre)
         if ( $form->isSubmitted() && $form->isValid()) {
 
 
@@ -262,58 +246,40 @@ class AdvertController extends Controller
 
             $advert->setImage($image);
 
-            // On récupère l'EntityManager
             $em = $this->getDoctrine()->getManager();
 
-            // On récupère toutes les compétences possibles
             $listSkills = $em->getRepository('AlsPlateformBundle:Skill')->findAll();
 
-            // Pour chaque compétence
             foreach ($listSkills as $skill) {
-                // On crée une nouvelle « relation entre 1 annonce et 1 compétence »
+
                 $advertSkill = new AdvertSkill();
-
-                // On la lie à l'annonce, qui est ici toujours la même
                 $advertSkill->setAdvert($advert);
-                // On la lie à la compétence, qui change ici dans la boucle foreach
                 $advertSkill->setSkill($skill);
-
-                // Arbitrairement, on dit que chaque compétence est requise au niveau 'Expert'
                 $advertSkill->setLevel('Expert');
 
-                // Et bien sûr, on persiste cette entité de relation, propriétaire des deux autres relations
                 $em->persist($advertSkill);
             }
 
-            // Création d'une première candidature
             $application1 = new Application();
             $application1->setAuthor('Marine');
             $application1->setContent("J'ai toutes les qualités requises.");
 
-            // Création d'une deuxième candidature par exemple
             $application2 = new Application();
             $application2->setAuthor('Pierre');
             $application2->setContent("Je suis très motivé.");
 
-            // On lie les candidatures à l'annonce
             $application1->setAdvert($advert);
             $application2->setAdvert($advert);
 
-            // Doctrine ne connait pas encore l'entité $advert. Si vous n'avez pas définit la relation AdvertSkill
-            // avec un cascade persist (ce qui est le cas si vous avez utilisé mon code), alors on doit persister $advert
             $em->persist($advert);
 
-            // Étape 1 bis : pour cette relation pas de cascade lorsqu'on persiste Advert, car la relation est
-            // définie dans l'entité Application et non Advert. On doit donc tout persister à la main ici.
             $em->persist($application1);
             $em->persist($application2);
 
-            // On déclenche l'enregistrement
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
 
-            // On redirige vers la page de visualisation de l'annonce nouvellement créée
             return $this->redirect($this->generateUrl('als_plateform_view', array('id' => $advert->getId())));
         }
 
@@ -342,25 +308,18 @@ class AdvertController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        // On récupère l'annonce $id
         $advert = $em->getRepository('AlsPlateformBundle:Advert')->find($id);
 
         if (null === $advert) {
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
 
-        // La méthode findAll retourne toutes les catégories de la base de données
         $listCategories = $em->getRepository('AlsPlateformBundle:Category')->findAll();
 
-        // On boucle sur les catégories pour les lier à l'annonce
         foreach ($listCategories as $category) {
             $advert->addCategory($category);
         }
 
-        // Pour persister le changement dans la relation, il faut persister l'entité propriétaire
-        // Ici, Advert est le propriétaire, donc inutile de la persister car on l'a récupérée depuis Doctrine
-
-        // Étape 2 : On déclenche l'enregistrement
         $em->flush();
 
         return $this->render('AlsPlateformBundle:Advert:edit.html.twig', array(
@@ -372,22 +331,16 @@ class AdvertController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // On récupère l'annonce $id
         $advert = $em->getRepository('AlsPlateformBundle:Advert')->find($id);
 
         if (null === $advert) {
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
 
-        // On boucle sur les catégories de l'annonce pour les supprimer
         foreach ($advert->getCategories() as $category) {
             $advert->removeCategory($category);
         }
 
-        // Pour persister le changement dans la relation, il faut persister l'entité propriétaire
-        // Ici, Advert est le propriétaire, donc inutile de la persister car on l'a récupérée depuis Doctrine
-
-        // On déclenche la modification
         $em->flush();
 
         return $this->render('AlsPlateformBundle:Advert:delete.html.twig');
