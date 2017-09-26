@@ -228,10 +228,12 @@ class AdvertController extends Controller
 //        }
         // Création de l'entité
         $advert = new Advert();
+        $advert->setTitle('Recherche développeur Symfony2.');
+        $advert->setAuthor('Alexandre');
+        $advert->setContent("Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…");
 
         $formBuilder = $this
-            ->get('form.factory')
-            ->createBuilder('form', $advert)
+            ->createFormBuilder($advert)
         ;
 
         $formBuilder
@@ -239,66 +241,81 @@ class AdvertController extends Controller
             ->add('title',     'text')
             ->add('content',   'textarea')
             ->add('author',    'text')
-            ->add('published', 'checkbox')
+            ->add('published', 'checkbox', array('required' => false))
             ->add('save',      'submit')
         ;
 
         $form = $formBuilder->getForm();
 
-        $image = new Image();
-        $image->setUrl('http://bit.ly/2xbaHWB');
-        $image->setAlt('image d\'affiche de l\'annonce, elle represente le logo de Symfony');
+        // On fait le lien Requête <-> Formulaire
+        // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
+        $form->handleRequest($request);
 
-        $advert->setImage($image);
+        // On vérifie que les valeurs entrées sont correctes
+        // (Nous verrons la validation des objets en détail dans le prochain chapitre)
+        if ( $form->isSubmitted() && $form->isValid()) {
 
-        // On récupère l'EntityManager
-        $em = $this->getDoctrine()->getManager();
 
-        // On récupère toutes les compétences possibles
-        $listSkills = $em->getRepository('AlsPlateformBundle:Skill')->findAll();
+            $image = new Image();
+            $image->setUrl('http://bit.ly/2xbaHWB');
+            $image->setAlt('image d\'affiche de l\'annonce, elle represente le logo de Symfony');
 
-        // Pour chaque compétence
-        foreach ($listSkills as $skill) {
-            // On crée une nouvelle « relation entre 1 annonce et 1 compétence »
-            $advertSkill = new AdvertSkill();
+            $advert->setImage($image);
 
-            // On la lie à l'annonce, qui est ici toujours la même
-            $advertSkill->setAdvert($advert);
-            // On la lie à la compétence, qui change ici dans la boucle foreach
-            $advertSkill->setSkill($skill);
+            // On récupère l'EntityManager
+            $em = $this->getDoctrine()->getManager();
 
-            // Arbitrairement, on dit que chaque compétence est requise au niveau 'Expert'
-            $advertSkill->setLevel('Expert');
+            // On récupère toutes les compétences possibles
+            $listSkills = $em->getRepository('AlsPlateformBundle:Skill')->findAll();
 
-            // Et bien sûr, on persiste cette entité de relation, propriétaire des deux autres relations
-            $em->persist($advertSkill);
+            // Pour chaque compétence
+            foreach ($listSkills as $skill) {
+                // On crée une nouvelle « relation entre 1 annonce et 1 compétence »
+                $advertSkill = new AdvertSkill();
+
+                // On la lie à l'annonce, qui est ici toujours la même
+                $advertSkill->setAdvert($advert);
+                // On la lie à la compétence, qui change ici dans la boucle foreach
+                $advertSkill->setSkill($skill);
+
+                // Arbitrairement, on dit que chaque compétence est requise au niveau 'Expert'
+                $advertSkill->setLevel('Expert');
+
+                // Et bien sûr, on persiste cette entité de relation, propriétaire des deux autres relations
+                $em->persist($advertSkill);
+            }
+
+            // Création d'une première candidature
+            $application1 = new Application();
+            $application1->setAuthor('Marine');
+            $application1->setContent("J'ai toutes les qualités requises.");
+
+            // Création d'une deuxième candidature par exemple
+            $application2 = new Application();
+            $application2->setAuthor('Pierre');
+            $application2->setContent("Je suis très motivé.");
+
+            // On lie les candidatures à l'annonce
+            $application1->setAdvert($advert);
+            $application2->setAdvert($advert);
+
+            // Doctrine ne connait pas encore l'entité $advert. Si vous n'avez pas définit la relation AdvertSkill
+            // avec un cascade persist (ce qui est le cas si vous avez utilisé mon code), alors on doit persister $advert
+            $em->persist($advert);
+
+            // Étape 1 bis : pour cette relation pas de cascade lorsqu'on persiste Advert, car la relation est
+            // définie dans l'entité Application et non Advert. On doit donc tout persister à la main ici.
+            $em->persist($application1);
+            $em->persist($application2);
+
+            // On déclenche l'enregistrement
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+
+            // On redirige vers la page de visualisation de l'annonce nouvellement créée
+            return $this->redirect($this->generateUrl('als_plateform_view', array('id' => $advert->getId())));
         }
-
-        // Création d'une première candidature
-        $application1 = new Application();
-        $application1->setAuthor('Marine');
-        $application1->setContent("J'ai toutes les qualités requises.");
-
-        // Création d'une deuxième candidature par exemple
-        $application2 = new Application();
-        $application2->setAuthor('Pierre');
-        $application2->setContent("Je suis très motivé.");
-
-        // On lie les candidatures à l'annonce
-        $application1->setAdvert($advert);
-        $application2->setAdvert($advert);
-
-        // Doctrine ne connait pas encore l'entité $advert. Si vous n'avez pas définit la relation AdvertSkill
-        // avec un cascade persist (ce qui est le cas si vous avez utilisé mon code), alors on doit persister $advert
-        $em->persist($advert);
-
-        // Étape 1 bis : pour cette relation pas de cascade lorsqu'on persiste Advert, car la relation est
-        // définie dans l'entité Application et non Advert. On doit donc tout persister à la main ici.
-        $em->persist($application1);
-        $em->persist($application2);
-
-        // On déclenche l'enregistrement
-        $em->flush();
 
         // Reste de la méthode qu'on avait déjà écrit
 //        if ($request->isMethod('POST')) {

@@ -17,21 +17,18 @@ class ApplicationNotification
 
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
-
-        if (!($entity instanceof Application)) return ;
-
-        $message = new \Swift_Mailer(
-            'Nouvelle Candidature',
-            'Bonjour, \n vous avez une nouvelle candidature'
-        );
-
-        $message
-            ->addTo('amly212782@gmail.com')
-            ->addFrom('amlei212782@gmail.com')
-        ;
-
-        $this->mailer->send($message);
+//        $entity = $eventArgs->getEntity();
+//
+//        if (!($entity instanceof Application)) return ;
+//
+////        $message = new \Swift_Mailer(new );
+////
+////        $message
+////            ->addTo('amly212782@gmail.com')
+////            ->addFrom('amlei212782@gmail.com')
+////        ;
+////
+////        $this->mailer->send($message);
     }
 
 }
