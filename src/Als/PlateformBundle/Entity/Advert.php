@@ -118,8 +118,11 @@ class Advert
     public function __construct()
     {
         $this->date = date_create();
-        $this->published = true;
+
         $this->categories = new ArrayCollection();
+        $this->applications = new ArrayCollection();
+
+        $this->published = true;
         $this->isDeleted = false;
     }
 
