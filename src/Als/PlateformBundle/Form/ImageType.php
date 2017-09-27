@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AdvertType extends AbstractType
+class ImageType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -14,13 +14,8 @@ class AdvertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date',      'date')
-            ->add('title',     'text')
-            ->add('content',   'textarea')
-            ->add('author',    'text')
-            ->add('published', 'checkbox', array('required' => false))
-            ->add('image', 'ImageType')
-            ->add('save',      'submit')
+            ->add('url', 'text')
+            ->add('alt', 'text')
         ;
     }
     
@@ -30,7 +25,7 @@ class AdvertType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Als\PlateformBundle\Entity\Advert'
+            'data_class' => 'Als\PlateformBundle\Entity\Image'
         ));
     }
 
@@ -39,7 +34,7 @@ class AdvertType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'als_plateformbundle_advert';
+        return 'als_plateformbundle_image';
     }
 
 
