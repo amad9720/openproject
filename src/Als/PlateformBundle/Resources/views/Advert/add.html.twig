@@ -47,6 +47,17 @@
 
         {# Idem pour un autre champ. #}
         <div class="form-group">
+            {{ form_label(form.categories, "Categories", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+            {{ form_errors(form.categories) }}
+            <div class="col-sm-4">
+                {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+        </div>
+
+
+        {# Idem pour un autre champ. #}
+        <div class="form-group">
             {{ form_label(form.published, "En publication", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
             {{ form_errors(form.published) }}
             <div class="col-sm-4">
@@ -60,6 +71,24 @@
             {{ form_errors(form.date) }}
             <div class="col-sm-4">
                 {{ form_widget(form.date, {'attr': {'class': ''}}) }}
+            </div>
+        </div>
+
+        {# Idem pour un autre champ. #}
+        <div class="form-group">
+            {{ form_label(form.image.alt, "Alt", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+            {{ form_errors(form.image.alt) }}
+            <div class="col-sm-4">
+                {{ form_widget(form.image.alt, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        {# Idem pour un autre champ. #}
+        <div class="form-group">
+            {{ form_label(form.image.url, "Url", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+            {{ form_errors(form.image.url) }}
+            <div class="col-sm-4">
+                {{ form_widget(form.image.url, {'attr': {'class': 'form-control'}}) }}
             </div>
         </div>
 
@@ -82,5 +111,7 @@
         {# Fermeture de la balise <form> du formulaire HTML #}
         {{ form_end(form) }}
     </div>
+
+
 {% endblock %}
 

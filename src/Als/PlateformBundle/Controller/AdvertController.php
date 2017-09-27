@@ -240,12 +240,6 @@ class AdvertController extends Controller
         if ( $form->isSubmitted() && $form->isValid()) {
 
 
-            $image = new Image();
-            $image->setUrl('http://bit.ly/2xbaHWB');
-            $image->setAlt('image d\'affiche de l\'annonce, elle represente le logo de Symfony');
-
-            $advert->setImage($image);
-
             $em = $this->getDoctrine()->getManager();
 
             $listSkills = $em->getRepository('AlsPlateformBundle:Skill')->findAll();
