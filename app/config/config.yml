@@ -70,3 +70,7 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+
+# app/config/config.yml
+web_profiler:
+    intercept_redirects: false

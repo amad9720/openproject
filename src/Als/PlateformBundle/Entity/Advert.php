@@ -459,4 +459,9 @@ class Advert
     {
         return $this->slug;
     }
+
+    public function getAdvert()
+    {
+        return $this;
+    }
 }

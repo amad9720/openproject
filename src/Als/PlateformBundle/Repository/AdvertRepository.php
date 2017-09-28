@@ -122,6 +122,15 @@ class AdvertRepository extends EntityRepository
         ;
     }
 
+    public function getPublishedQueryBuilder()
+    {
+        return $this
+            ->createQueryBuilder('a')
+            ->where('a.published = :published')
+            ->setParameter('published', true)
+        ;
+    }
+
     public function whereCurrentYear(QueryBuilder $qb)
     {
         return $qb

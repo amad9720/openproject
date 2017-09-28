@@ -42,8 +42,10 @@
         {{ form_label(form.categories, "Categories", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(form.categories) }}
         <div class="col-sm-4">
-            {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.categories) }}
+            <div class="form-container_add">
 
+            </div>
         </div>
     </div>
 
@@ -112,11 +114,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-        var $container = $('div#oc_platformbundle_advert_categories');
+        var $container = $('div#als_plateformbundle_advert_categories');
+
+        var $container_add = $('.form-container_add');
 
         // On ajoute un lien pour ajouter une nouvelle catégorie
         var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter une catégorie</a>');
-        $container.append($addLink);
+        $container_add.append($addLink);
 
         // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
         $addLink.click(function(e) {
