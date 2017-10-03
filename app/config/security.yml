@@ -16,6 +16,8 @@ security:
         main:
             #all the url starting with / are behind the main firewall
             pattern:
+
+            #This set to true means that anonymous users are allowed to connect
             anonymous: ~
             # activate different ways to authenticate
 
