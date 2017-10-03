@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Sup/TestBundle" isTestSource="false" packagePrefix="Sup\TestBundle\" />
       <sourceFolder url="file://$MODULE_DIR$/src/Hlt/ManageurBundle" isTestSource="false" packagePrefix="Hlt\ManageurBundle\" />
       <sourceFolder url="file://$MODULE_DIR$/src/Als/PlateformBundle" isTestSource="false" packagePrefix="Als\PlateformBundle\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Als/UserBundle" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

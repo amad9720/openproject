@@ -1,7 +1,3 @@
-als_user:
-    resource: "@AlsUserBundle/Resources/config/routing.yml"
-    prefix:   /
-
 hlt_manageur:
     resource: "@HltManageurBundle/Resources/config/routing.yml"
     prefix:   /manageur
