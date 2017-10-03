@@ -21,10 +21,10 @@ security:
             anonymous: ~
             # activate different ways to authenticate
             provider:  in_memory
-                form_login:
-                    login_path: login
-                    check_path: login_check
-                logout:
-                    path:   logout
-                    target: /platform
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path:   logout
+                target: /platform
 

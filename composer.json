@@ -5,6 +5,7 @@
     "autoload": {
         "psr-4": {
             "Als\\PlateformBundle\\": "src/Als/PlateformBundle",
+            "Als\\UserBundle\\": "src/Als/UserBundle",
             "Sup\\TestBundle\\": "src/Sup/TestBundle",
             "Hlt\\ManageurBundle\\": "src/Hlt/ManageurBundle"
         },

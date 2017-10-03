@@ -1,3 +1,7 @@
+als_user:
+    resource: "@AlsUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 hlt_manageur:
     resource: "@HltManageurBundle/Resources/config/routing.yml"
     prefix:   /manageur
@@ -10,3 +14,14 @@ sup_test:
 als_plateform:
     resource: "@AlsPlateformBundle/Resources/config/routing.yml"
     prefix:   /plateform
+
+#    security routes
+login:
+    pattern:   /login
+    defaults:  { _controller: AlsUserBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
