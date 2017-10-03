@@ -14,7 +14,7 @@ security:
             security: false
 
         main:
-            #all the url starting with / are behind the main url
+            #all the url starting with / are behind the main firewall
             pattern:
             anonymous: ~
             # activate different ways to authenticate
