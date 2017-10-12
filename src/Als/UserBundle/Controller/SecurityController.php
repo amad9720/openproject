@@ -1,11 +1,10 @@
 <?php
 
-namespace Controller;
-
+namespace Als\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class security extends Controller
+class SecurityController extends Controller
 {
     public function loginAction()
     {
@@ -18,7 +17,7 @@ class security extends Controller
         // (mauvais mot de passe par exemple)
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return $this->render('OCUserBundle:Security:login.html.twig', array(
+        return $this->render('AlsUserBundle:Security:login.html.twig', array(
             'last_username' => $authenticationUtils->getLastUsername(),
             'error'         => $authenticationUtils->getLastAuthenticationError(),
         ));
