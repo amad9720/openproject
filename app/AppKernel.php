@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new Hlt\ManageurBundle\HltManageurBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Als\UserBundle\AlsUserBundle(),
+            new Als\CoreBundle\AlsCoreBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

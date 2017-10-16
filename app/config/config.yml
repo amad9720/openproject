@@ -71,6 +71,11 @@ stof_doctrine_extensions:
         default:
             sluggable: true
 
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AlsUserBundle\Entity\User
+
 # app/config/config.yml
 web_profiler:
     intercept_redirects: false
