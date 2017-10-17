@@ -21,25 +21,25 @@ class AdvertType extends AbstractType
             ->add('title',     'text')
             ->add('content',   'textarea')
             ->add('author',    'text')
-//            ->add('categories', 'collection', array(
-//                'type' => new CategoryType(),
-//                'allow_add' => true,
-//                'allow_delete' => true
-//            ))
+            ->add('categories', 'collection', array(
+                'type' => new CategoryType(),
+                'allow_add' => true,
+                'allow_delete' => true
+            ))
             ->add('categories', 'entity', array(
                 'class'    => 'AlsPlateformBundle:Category',
                 'property' => 'name',
                 'multiple' => false,
                 'expanded' => false
             ))
-//            ->add('advert', 'entity', array(
-//                'class'    => 'AlsPlateformBundle:Advert',
-//                'property' => 'name',
-//                'query_builder' => function(AdvertRepository $repo) {
-//                    return $repo->getPublishedQueryBuilder();
-//                }
-//            ))
-//            ->add('published', 'checkbox', array('required' => false))
+            ->add('advert', 'entity', array(
+                'class'    => 'AlsPlateformBundle:Advert',
+                'property' => 'name',
+                'query_builder' => function(AdvertRepository $repo) {
+                    return $repo->getPublishedQueryBuilder();
+                }
+            ))
+            ->add('published', 'checkbox', array('required' => false))
             ->add('image', new ImageType())
             ->add('save',      'submit')
         ;
