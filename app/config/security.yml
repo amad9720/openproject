@@ -1,11 +1,21 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    encoders:
+        Als\UserBundle\Entity\User: sha512
+
+    role_hierarchy:
+        # Un admin hérite des droits d'auteur et de modérateur
+        ROLE_ADMIN:       [ROLE_AUTEUR, ROLE_MODERATEUR]
+        # On garde ce rôle superadmin, il nous resservira par la suite
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
             memory: ~
+        main:
+            entity: { class: Als\UserBundle\Entity\User, property: username }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,16 +25,31 @@ security:
 
         main:
             #all the url starting with / are behind the main firewall
-            pattern:
-
+            pattern: ^/
             #This set to true means that anonymous users are allowed to connect
-            anonymous: ~
+            anonymous: true
             # activate different ways to authenticate
-            provider:  in_memory
+            provider:  main
             form_login:
-                login_path: login
-                check_path: login_check
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
             logout:
-                path:   logout
-                target: /platform
+                path:   fos_user_security_logout
+                target: /plateform
 
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+
+
+# dans le cas ou meme les annonymes ne sont pas autoriser, utiliser cette construction
+
+#firewalls:
+#    # On crée un pare-feu uniquement pour le formulaire
+#    main_login:
+#        # Cette expression régulière permet de prendre /login (mais pas /login_check !)
+#        pattern:   ^/login$
+#        anonymous: true # On autorise alors les anonymes sur ce pare-feu
+#    main:
+#        pattern:   ^/
+#        anonymous: false
+#        # ...

@@ -1,3 +1,4 @@
+#import des routes du Bundle AlsPlateformBundle
 hlt_manageur:
     resource: "@HltManageurBundle/Resources/config/routing.yml"
     prefix:   /manageur
@@ -6,18 +7,37 @@ sup_test:
     resource: "@SupTestBundle/Resources/config/routing.yml"
     prefix:   /test
 
-#import des routes du Bundle AlsPlateformBundle
 als_plateform:
     resource: "@AlsPlateformBundle/Resources/config/routing.yml"
     prefix:   /plateform
 
 #    security routes
-login:
-    pattern:   /login
-    defaults:  { _controller: AlsUserBundle:Security:login }
 
-login_check:
-    pattern:   /login_check
+#login:
+#    pattern:   /login
+#    defaults:  { _controller: AlsUserBundle:Security:login }
+#
+#login_check:
+#    pattern:   /login_check
+#
+#logout:
+#    pattern:   /logout
 
-logout:
-    pattern:   /logout
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
