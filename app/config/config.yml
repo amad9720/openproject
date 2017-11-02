@@ -19,6 +19,7 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
+    translator: { fallback: %locale% }
     templating:
         engines: ['twig']
     default_locale: '%locale%'
@@ -74,7 +75,7 @@ stof_doctrine_extensions:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: AlsUserBundle\Entity\User
+    user_class: Als\UserBundle\Entity\User
 
 # app/config/config.yml
 web_profiler:
