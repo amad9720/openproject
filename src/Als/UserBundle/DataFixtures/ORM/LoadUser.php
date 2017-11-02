@@ -2,7 +2,7 @@
 
 namespace Als\UserBundle\DataFixtures\ORM;
 
-use Als\PlateformBundle\Entity\User;
+use Als\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
